@@ -49,7 +49,7 @@ namespace Co2tracking {
                 _co2DeviceHandler.sendSetFeatureSetupRequest(stream, request);
             } catch (Exception ex) {
                 Console.WriteLine(value: "Unable to send SetFeatureSetupRequest");
-                throw ex;
+                throw;
             }
 
             while (true) {
