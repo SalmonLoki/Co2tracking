@@ -1,7 +1,6 @@
-namespace Co2tracking
-{
+namespace Co2tracking {
     public interface IDataProcessor {
-        int[] decryptData(byte[] key, ref byte[] dataBuffer);
+        int[] decryptData(ref byte[] key, ref byte[] dataBuffer);
 		
         bool checkEndOfMessage(ref int[] data);
 
