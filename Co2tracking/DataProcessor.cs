@@ -42,7 +42,7 @@ namespace Co2tracking {
         }
 		
         private double decodeTemperature(int t) {
-            return t * 0.0625 - 273.15;
+            return Math.Round(t * 0.0625 - 273.15, 1);
         }
 				
         private void writeHeartbeat() {
@@ -50,17 +50,20 @@ namespace Co2tracking {
             Console.WriteLine(curTimeLong);
         }
 
-        public void dataProcessing(ref int[] data) {
-            int Data = (data[1] << 8) + data[2];
+        public void dataProcessing(ref int[] data)
+        {
+            int op = data[0];
+            //Console.WriteLine("op: " + op + "not: " + 0x50d + " " + 0x42d);
+            int val = (data[1] << 8) | data[2];
 			
-            switch (data[0]) {
-                case 0x50d:					
-                    Console.WriteLine("Relative Concentration of CO2: " + Data);
+            switch (op) {
+                case 80: //0x50d				
+                    Console.WriteLine("Relative Concentration of CO2: " + val);
                     writeHeartbeat();
                     break;	
 				
-                case 0x42d:					
-                    Console.WriteLine("Ambient Temperature: " + decodeTemperature(Data));
+                case 66: //0x42d					
+                    Console.WriteLine("Ambient Temperature: " + decodeTemperature(val));
                     writeHeartbeat();
                     break;
             }

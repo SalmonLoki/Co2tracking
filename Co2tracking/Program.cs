@@ -62,34 +62,42 @@ namespace Co2tracking {
                     Console.WriteLine(value: "transferred amount of bytes != expected bytes amount");
                     break;
                 }
-                
+                /*
                 Console.Write(value: "received data: ");
                 foreach (byte t in receivedData) Console.Write(t + " ");
                 Console.WriteLine();
+                */
                 var temp = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 };
                 for (var i = 0; i < 8; i++) {
                     temp[i] = receivedData[i + 1];
                 }
-                receivedData = temp;                
+                
+                receivedData = temp;   
+                /*
                 Console.Write(value: "received data: ");
                 foreach (byte t in receivedData) Console.Write(t + " ");
                 Console.WriteLine();
+                */
 
                 int[] data = _dataProcessor.decryptData(ref key, ref receivedData);
+                /*
                 Console.Write(value: "decrypt data: ");
-                foreach (int t in data)
-                    Console.Write(t + " ");
-                Console.WriteLine();        
+                foreach (int t in data) Console.Write(t + " ");
+                Console.WriteLine();
+                */        
 
                 if (!_dataProcessor.checkEndOfMessage(ref data)) {
                     Console.WriteLine(value: "Unexpected data from device");
                     continue;
                 }
+               
 
                 if (!_dataProcessor.checkCheckSum(ref data)) {
                     Console.WriteLine(value: "checksum error");
                     continue;
                 }
+                //Console.WriteLine(value: "ok checksum");
+
                 
                 _dataProcessor.dataProcessing(ref data);
             }
